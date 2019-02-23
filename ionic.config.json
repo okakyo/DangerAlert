@@ -1,0 +1,7 @@
+{
+  "name": "DangerAlert",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
