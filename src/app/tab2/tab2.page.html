@@ -1,11 +1,18 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Tab Two
+      地図
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div id="map_canvas"></div>
+  <div id="map_canvas">
+    <ion-fab vertical="bottom" horizontal="end">
+      <ion-fab-button color="primary">
+        <ion-icon name="locate"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </div>
+  <script src="https://maps.googlemaps.com/maps/api/js?key=AIzaSyDAE3TlPS7AWVG1ZfJTrYS_l-CXfauUrA0" async defer></script>
 </ion-content>
