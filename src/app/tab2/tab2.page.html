@@ -1,18 +1,29 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      地図
+      ホーム
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div id="map_canvas">
-    <ion-fab vertical="bottom" horizontal="end">
-      <ion-fab-button color="primary" (click)="onButtonClick()">
-        <ion-icon name="locate"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
-  </div>
-  <script src="https://maps.googlemaps.com/maps/api/js?key=AIzaSyDAE3TlPS7AWVG1ZfJTrYS_l-CXfauUrA0" async defer></script>
+    <ion-card class="welcome-card">
+      <ion-card-header>
+        <ion-card-title>最新情報</ion-card-title>
+        <ion-card-subtitle>あなたの現在いる国</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list *ngFor="let news of News |slice: 0:5">
+          <ion-item href="">
+            <ion-label>{{news.title}}</ion-label>
+          </ion-item>
+        </ion-list>
+        <ion-list lines="none">
+          <ion-item ><a href="" style="text-decoration:none;">もっと見る</a></ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+    <ion-list lines="none">
+      
+    </ion-list>
 </ion-content>
