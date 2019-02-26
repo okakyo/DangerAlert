@@ -13,6 +13,7 @@
         <ion-card-subtitle>あなたの現在いる国</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
+        <ion-searchbar animated></ion-searchbar>
         <ion-list *ngFor="let news of News |slice: 0:5">
           <ion-item href="">
             <ion-label>{{news.title}}</ion-label>

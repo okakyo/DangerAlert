@@ -8,10 +8,10 @@ import { Component } from '@angular/core';
 })
 export class Tab2Page {
   News = [
-    {id: '1',title: 'マリオ',datetime:''},
-    {id: '5',title: 'ルイージ',datetime:''},
-    {id: '4',title: 'ピーチ',datetime:''},
-    {id: '3',title: 'キノピオ',datetime:''},
-    {id: '2',title: 'クッパ',datetime:''},
-  ]
+    {id: '1', title: 'マリオ', datetime: ''},
+    {id: '5', title: 'ルイージ', datetime: ''},
+    {id: '4', title: 'ピーチ', datetime: ''},
+    {id: '3', title: 'キノピオ', datetime: ''},
+    {id: '2', title: 'クッパ', datetime: ''}
+  ];
 }
