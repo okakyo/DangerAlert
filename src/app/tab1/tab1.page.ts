@@ -1,6 +1,7 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef  } from '@angular/core';
+import {  } from '@ionic-native/geolocation'
 import { Platform } from '@ionic/angular';
-import { Map, latLng, tileLayer, marker } from 'leaflet';
+import leaflet from 'leaflet';
 @Component({
 
   selector: 'app-tab1',
@@ -9,7 +10,9 @@ import { Map, latLng, tileLayer, marker } from 'leaflet';
 })
 
 export class Tab1Page implements OnInit {
-  map: Map;
+  @ViewChild('map') mapContainer: ElementRef;
+  map: any;
+  currentPosition: Geoposition
   
   // このHomePageクラスが作成されるときに実行される
   constructor(private platform: Platform){
