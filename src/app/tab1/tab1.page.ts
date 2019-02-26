@@ -5,8 +5,10 @@ import {
   GoogleMap,
   GoogleMapsEvent,
   Marker,
+  LocationService,
   GoogleMapsAnimation,
-  MyLocation
+  MyLocation,
+  GoogleMapOptions
 } from '@ionic-native/google-maps';
 @Component({
 
@@ -17,13 +19,13 @@ import {
 
 export class Tab1Page implements OnInit {
   map: GoogleMap;
-
+  
   // このHomePageクラスが作成されるときに実行される
-  constructor(private platform: Platform) {}
+  constructor(private platform: Platform){
+  }
 
   // ngOnInitは、AngularJSの準備が完了したら実行される
   async ngOnInit() {
-
     // Apache Cordovaから 'deviceready'イベントが発行されるのを待つ
     await this.platform.ready();
 
@@ -32,19 +34,26 @@ export class Tab1Page implements OnInit {
   }
 
   async loadMap() {
-
-    // Googleマップを作成
-    this.map = GoogleMaps.create('map_canvas', {
+    LocationService.getMyLocation().then((location: MyLocation)=>{
+    let options: GoogleMapOptions={
       camera: {
-        target: (location: MyLocation)=>{
-          return location.latLng;
-        },
-        zoom: 18,
+        target: location.latLng,
+        zoom: 17,
         tilt: 30
       }
+    }
+    // Googleマップを作成
+    this.map = GoogleMaps.create('map_canvas',options);
+
+    let marker: Marker = this.map.addMarkerSync({
+      position: location.latLng,
+      animation: GoogleMapsAnimation.BOUNCE
     });
 
-  }
+    // 情報ウィンドウの表示
+    marker.showInfoWindow();
+  })
+}
 
   // ボタンが押された時の処理
   onButtonClick() {
@@ -60,8 +69,6 @@ export class Tab1Page implements OnInit {
 
       // アニメーションが終了したらマーカーを追加
       let marker: Marker = this.map.addMarkerSync({
-        title: '@ionic-native/google-maps plugin!',
-        snippet: 'This plugin is awesome!',
         position: location.latLng,
         animation: GoogleMapsAnimation.BOUNCE
       });
