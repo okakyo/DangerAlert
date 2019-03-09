@@ -1,37 +1,34 @@
-import { Component, OnInit, ViewChild, ElementRef  } from '@angular/core';
-import {  } from '@ionic-native/geolocation'
-import { Platform } from '@ionic/angular';
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { NavController } from '@ionic/angular';
 import leaflet from 'leaflet';
 @Component({
-
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
 
-export class Tab1Page implements OnInit {
+export class Tab1Page {
   @ViewChild('map') mapContainer: ElementRef;
   map: any;
-  currentPosition: Geoposition
-  
-  // このHomePageクラスが作成されるときに実行される
-  constructor(private platform: Platform){
+  constructor(public navCtrl: NavController) {
+
   }
 
-  // ngOnInitは、AngularJSの準備が完了したら実行される
-  async ngOnInit() {
-    // Apache Cordovaから 'deviceready'イベントが発行されるのを待つ
-    await this.platform.ready();
-
-    // platform.ready()が完了したら、地図を作成する
-    await this.loadMap();
+  ionViewDidEnter() {
+    this.loadmap();
   }
 
-  async loadMap() {
-}
-
-  // ボタンが押された時の処理
-  onButtonClick() {
-
-    // 現在位置を取得
+  loadmap() {
+    this.map = leaflet.map('map').fitWorld();
+    leaflet.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attributions: 'www.tphangout.com',
+      maxZoom: 18
+    }).addTo(this.map);
+    this.map.locate({
+      setView: true,
+      maxZoom: 10
+    }).on('locationfound', (e) => {
+      console.log('found you');
+      });
+  }
 }
