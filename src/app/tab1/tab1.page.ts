@@ -26,9 +26,16 @@ export class Tab1Page {
     }).addTo(this.map);
     this.map.locate({
       setView: true,
-      maxZoom: 10
+      maxZoom: 20
     }).on('locationfound', (e) => {
-      console.log('found you');
-      });
-  }
+  let markerGroup = leaflet.featureGroup();
+  let marker: any = leaflet.marker([e.latitude, e.longitude]).on('click', () => {
+    alert('Marker clicked');
+  })
+  markerGroup.addLayer(marker);
+  this.map.addLayer(markerGroup);
+  }).on('locationerror', (err) => {
+    alert(err.message);
+})
+}
 }
