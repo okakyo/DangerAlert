@@ -1,9 +1,18 @@
 const express=require('express');
-const PORT=1243;
+const accounts=require('./accounts')
+const world=require('./world')
+const PORT=8100;
 
 app=express();
-
-app.get('/',()=>{});
-app.get('/tab',()=>{});
-app.get()
-app.listen(PORT,()=>{});
+app.get('/tabs/tab1',world);
+app.use(function(req,res,next){
+    res.status(404);
+    res.end('Not Found! :'+req.path);
+})
+app.use((err,req,res,next)=>{
+    res.status(500);
+    res.end('500 Error!:'+err);
+});
+app.listen(PORT,()=>{
+    console.log(`The server is running at http://localhost:${PORT}`);
+});
