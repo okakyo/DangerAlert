@@ -4,6 +4,7 @@ import leaflet from 'leaflet';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Geolocation , Geoposition } from '@ionic-native/geolocation';
+import * as Data from './custom.geo.json';
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -18,48 +19,49 @@ export class Tab1Page {
   ionViewDidEnter() {
     this.loadmap();
   }
-  style(featur) {
+  style(feature){
     return {
-      fillColor: '#FFEDA0',
+      fillColor: '#43FF6B',
       weight: 2,
-      ocpacity: 1,
+      opacity: 0.5,
       color: 'white',
       dashArray: '3',
-      fillOpacity: 0.7
-
+      fillOpacity: 0.5
     }
   }
   getColor(d){
-    return d>1000 ? '':
-           d>500 ? '':
-           d>200 ? '':
-           d>100 ? '':
-           d>50 ? '':
-           d>20 ? '':
-           d>10 ? '':
+    return d>4 ? '':
+           d>3 ? '':
+           d>2 ? '':
+           d>1 ? '':
                   '';
   }
   loadmap() {
-    let worldBorder: Observable<any>;
-    worldBorder = this.http.get('custom.geo.json')['features'];
+    let worldBorder: Observable<any>=Data['features'];
     this.map = leaflet.map('map').fitWorld();
     leaflet.tileLayer(`http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
-      attributions: 'www.tphangout.com',
-      maxZoom: 18
+      attributions: 'Made by Kyhohei Oka',
+      maxZoom: 20,
+      minZoom: 5,
     }).addTo(this.map);
+    
+    //The setting of Choropleth Map
     leaflet.geoJson(worldBorder, {style: this.style}).addTo(this.map);
+
+    console.log(worldBorder);
     this.map.locate({
       setView: true,
-      maxZoom: 20
+      maxZoom: 5
     }).on('locationfound', (e) => {
   let markerGroup = leaflet.featureGroup();
-  let marker: any = leaflet.marker([e.latitude, e.longitude]).on('click', () => {
-    alert('Marker clicked');
-  })
-  markerGroup.addLayer(marker);
+  let marker: any = leaflet.marker([e.latitude, e.longitude])
+  markerGroup.addLayer(marker)
+  .bindPopup('ここにいます。<br/>現在地：<strong>日本<br/>ニュース：<a>')
+  .openPopup();
   this.map.addLayer(markerGroup);
   }).on('locationerror', (err) => {
     alert(err.message);
 })
+
 }
 }
