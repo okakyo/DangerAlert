@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, Config } from '@ionic/angular';
 import leaflet from 'leaflet';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -12,6 +12,7 @@ import * as Data from './custom.geo.json';
 })
 
 export class Tab1Page {
+  private headers:any=new Headers({'Connect-Type':'application/json'});
   @ViewChild('map') mapContainer: ElementRef;
   map: any;
   constructor(public navCtrl: NavController, public http: HttpClient){}
@@ -37,7 +38,13 @@ export class Tab1Page {
                  '#43FF6B';
   }
   loadmap() {
+
     let worldBorder: Observable<any>=Data['features'];
+    this.http.get('https://www.travel-advisory.info/api', this.headers).subscribe((data:any)=>{
+      console.log(data);
+    },error=>{
+      console.log(error);
+    })
     this.map = leaflet.map('map').fitWorld();
     leaflet.tileLayer(`http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
       attributions: 'Made by Kyhohei Oka',
@@ -47,22 +54,27 @@ export class Tab1Page {
     
     //The setting of Choropleth Map
     leaflet.geoJson(worldBorder, {style: this.style}).addTo(this.map);
-
     console.log(worldBorder);
+
     this.map.locate({
       setView: true,
       maxZoom: 5
-    }).on('locationfound', (e) => {
-  let markerGroup = leaflet.featureGroup();
-  let circle:any=leaflet.circle([e.latitude,e.longitude],{
-    radious:500,fillOpacity: 0.5});
-  let marker: any = leaflet.marker([e.latitude, e.longitude]);
-  markerGroup.addLayer(marker)
-  markerGroup.addLayer(circle)
-  .bindPopup('現在ここにいます。<br/>現在地：<strong>日本</strong><br/>危険度：<strong id="score">2</strong><br/><a>くわしくはこちら</a>')
-  .openPopup();
-  this.map.addLayer(markerGroup);
-  }).on('locationerror', (err) => {
+    })
+  .on('locationfound', (e) => {
+    let markerGroup = leaflet.featureGroup();
+    let circle:any= leaflet.circle(e.latlng,{
+      radious: 50, 
+      fillOpacity: 0.5, 
+      color: 'blue', 
+      fillColor: '#399ade'});
+    let marker: any = leaflet.marker([e.latitude, e.longitude]);
+    markerGroup.addLayer(marker)
+    markerGroup.addLayer(circle)
+      .bindPopup('現在ここにいます。<br/>現在地：<strong>日本</strong><br/>危険度：<strong id="score">2</strong><br/><a>くわしくはこちら</a>')
+      .openPopup();
+    this.map.addLayer(markerGroup);})
+
+  .on('locationerror', (err) => {
     alert(err.message);
 })
 
