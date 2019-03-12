@@ -34,7 +34,7 @@ export class Tab1Page {
            d>3 ? '':
            d>2 ? '':
            d>1 ? '':
-                  '';
+                 '#43FF6B';
   }
   loadmap() {
     let worldBorder: Observable<any>=Data['features'];
@@ -54,9 +54,12 @@ export class Tab1Page {
       maxZoom: 5
     }).on('locationfound', (e) => {
   let markerGroup = leaflet.featureGroup();
-  let marker: any = leaflet.marker([e.latitude, e.longitude])
+  let circle:any=leaflet.circle([e.latitude,e.longitude],{
+    radious:500,fillOpacity: 0.5});
+  let marker: any = leaflet.marker([e.latitude, e.longitude]);
   markerGroup.addLayer(marker)
-  .bindPopup('ここにいます。<br/>現在地：<strong>日本<br/>ニュース：<a>')
+  markerGroup.addLayer(circle)
+  .bindPopup('現在ここにいます。<br/>現在地：<strong>日本</strong><br/>危険度：<strong id="score">2</strong><br/><a>くわしくはこちら</a>')
   .openPopup();
   this.map.addLayer(markerGroup);
   }).on('locationerror', (err) => {
