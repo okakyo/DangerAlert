@@ -4,7 +4,7 @@ const world=require('./world')
 const PORT=8100;
 
 app=express();
-app.get('/tabs/tab1',world);
+app.get('/tabs',world);
 app.use(function(req,res,next){
     res.status(404);
     res.end('Not Found! :'+req.path);

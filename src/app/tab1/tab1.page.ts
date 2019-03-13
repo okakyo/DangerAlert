@@ -40,11 +40,7 @@ export class Tab1Page {
   loadmap() {
 
     let worldBorder: Observable<any>=Data['features'];
-    this.http.get('https://www.travel-advisory.info/api', this.headers).subscribe((data:any)=>{
-      console.log(data);
-    },error=>{
-      console.log(error);
-    })
+   
     this.map = leaflet.map('map').fitWorld();
     leaflet.tileLayer(`http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
       attributions: 'Made by Kyhohei Oka',
@@ -54,7 +50,6 @@ export class Tab1Page {
     
     //The setting of Choropleth Map
     leaflet.geoJson(worldBorder, {style: this.style}).addTo(this.map);
-    console.log(worldBorder);
 
     this.map.locate({
       setView: true,
