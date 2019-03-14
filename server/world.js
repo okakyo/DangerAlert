@@ -1,10 +1,8 @@
 const router=require('express').Router();
 var WorldData=require('./custom.geo.json');
 
-router.get('/tab1',(req,res,next)=>{
-    res.json(WorldData);
-    console.log('Success Connection!');
-    console.log(WorldData);
-});
+router.get('/',(req,res)=>{
+    res.send(WorldData);
+})
 
 module.exports=router;

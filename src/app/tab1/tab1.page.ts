@@ -1,9 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, Config } from '@ionic/angular';
 import leaflet from 'leaflet';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Geolocation , Geoposition } from '@ionic-native/geolocation';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
+import { Observable, } from 'rxjs';
 import * as Data from './custom.geo.json';
 @Component({
   selector: 'app-tab1',
@@ -12,7 +11,6 @@ import * as Data from './custom.geo.json';
 })
 
 export class Tab1Page {
-  private headers:any=new Headers({'Connect-Type':'application/json'});
   @ViewChild('map') mapContainer: ElementRef;
   map: any;
   constructor(public navCtrl: NavController, public http: HttpClient){}
@@ -38,9 +36,18 @@ export class Tab1Page {
                  '#43FF6B';
   }
   loadmap() {
-
+    let url: string=　'https://www.travel-advisory.info/api';
+    
     let worldBorder: Observable<any>=Data['features'];
-   
+    let headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET,HEAD',
+      'Access-Control-Allow-Headers': 'origin',
+      'Content-Type':'text/plain',
+      
+    });
+    
+
     this.map = leaflet.map('map').fitWorld();
     leaflet.tileLayer(`http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
       attributions: 'Made by Kyhohei Oka',

@@ -1,5 +1,6 @@
 {
   "name": "DangerAlert",
+  
   "integrations": {
     "cordova": {}
   },
