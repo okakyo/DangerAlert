@@ -6,6 +6,7 @@ const PORT=8100;
 
 app=express();
 app.use(express.static(__dirname+'/www'))
+app.use('/tabs',world);
 app.use(bodyparser.urlencoded({'extended':'true'}))
 app.use(bodyparser.json());
 app.use(function(req,res,next){
@@ -14,6 +15,9 @@ app.use(function(req,res,next){
     res.header('Access-Control-Allow-Headers','Origin,X-Requested-With,Content-Type,Accept');
     next();
 })
+
+app.use('/worlddata',world);
+
 app.use(function(req,res,next){
     res.status(404);
     res.end('Not Found! :'+req.path);

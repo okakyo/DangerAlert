@@ -1,7 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, Config } from '@ionic/angular';
 import leaflet from 'leaflet';
-import { HttpClient,HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { Jsonp } from '@angular/http';
 import { Observable, } from 'rxjs';
 import * as Data from './custom.geo.json';
 @Component({
@@ -13,7 +14,7 @@ import * as Data from './custom.geo.json';
 export class Tab1Page {
   @ViewChild('map') mapContainer: ElementRef;
   map: any;
-  constructor(public navCtrl: NavController, public http: HttpClient){}
+  constructor(public navCtrl: NavController, public http: HttpClient,public jsonp:Jsonp){}
 
   ionViewDidEnter() {
     this.loadmap();
@@ -39,7 +40,13 @@ export class Tab1Page {
     let url: string=　'https://www.travel-advisory.info/api';
     
     let worldBorder: Observable<any>=Data['features'];
-    this.http.get(url).subscribe(data=>{console.log(data)});
+    this.jsonp.get(url)
+    .subscribe(data=>{
+      console.log('Succecc Get');
+      return data.json();
+    },err=>{
+      console.log('Error :'+err);
+    });
     this.map = leaflet.map('map').fitWorld();
     leaflet.tileLayer(`http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
       attributions: 'Made by Kyhohei Oka',

@@ -9,4 +9,7 @@ export class GetInfoService {
 
   constructor(public http:HttpClient) {}
   
+  getMapData(){
+    return this.http.get('https://www.travel-advisory.info/api').subscribe(res=>res.json());
+  }
 }
