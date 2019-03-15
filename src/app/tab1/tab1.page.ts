@@ -39,15 +39,7 @@ export class Tab1Page {
     let url: string=　'https://www.travel-advisory.info/api';
     
     let worldBorder: Observable<any>=Data['features'];
-    let headers = new HttpHeaders({
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET,HEAD',
-      'Access-Control-Allow-Headers': 'origin',
-      'Content-Type':'text/plain',
-      
-    });
-    
-
+    this.http.get(url).subscribe(data=>{console.log(data)});
     this.map = leaflet.map('map').fitWorld();
     leaflet.tileLayer(`http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
       attributions: 'Made by Kyhohei Oka',

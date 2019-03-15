@@ -1,1 +1,1 @@
-web:npm build & npm start
+web: node router.js
