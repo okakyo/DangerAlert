@@ -3,7 +3,6 @@ const accounts=require('./server/accounts')
 const world=require('./server/world')
 const bodyparser=require('body-parser');
 const PORT=8100;
-var WorldData=require('./custom.geo.json');
 
 app=express();
 app.use(express.static(__dirname+'/www'))
