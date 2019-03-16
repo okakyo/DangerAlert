@@ -6,7 +6,7 @@ const PORT=8100;
 
 app=express();
 app.use(express.static(__dirname+'/www'))
-app.use('/tabs',world);
+app.use('/server',world);
 app.use(bodyparser.urlencoded({'extended':'true'}))
 app.use(bodyparser.json());
 app.use(function(req,res,next){
