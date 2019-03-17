@@ -1,9 +1,13 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, Config } from '@ionic/angular';
 import leaflet from 'leaflet';
-import { HttpClient } from '@angular/common/http';
+
 import { Observable, } from 'rxjs';
 import * as Data from './custom.geo.json';
+
+
+//Jsonp通信を追加
+
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -13,41 +17,34 @@ import * as Data from './custom.geo.json';
 export class Tab1Page {
   @ViewChild('map') mapContainer: ElementRef;
   map: any;
-  constructor(public navCtrl: NavController, public http: HttpClient){}
-
+  constructor(public navCtrl: NavController){}
+  
   ionViewDidEnter() {
     this.loadmap();
   }
+  
   style(feature){
+    var d:number= feature.properties.security;
     return {
-      fillColor: '#43FF6B',
-      weight: 2,
+      fillColor:  d>4 ? 'red' :d>3 ? 'orange': d>2 ? 'yellow' : d>=1 ? '#43FF6B': 'grey' ,
+      weight: 5,
       opacity: 0.5,
       color: 'white',
       dashArray: '3',
       fillOpacity: 0.5
     }
   }
-  getColor(d){
-    return d>4 ? '':
-           d>3 ? '':
-           d>2 ? '':
-           d>1 ? '':
-                 '#43FF6B';
-  }
+  
   loadmap() {
-    let url: string=　'https://www.travel-advisory.info/api';
-    
+
     let worldBorder: Observable<any>=Data['features'];
     
-    this.map = leaflet.map('map')
+    this.map = leaflet.map('map');
     leaflet.tileLayer(`http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
       attributions: 'Made by Kyhohei Oka',
       maxZoom: 20,
       minZoom: 5,
     }).addTo(this.map);
-    
-    //The setting of Choropleth Map
     leaflet.geoJson(worldBorder, {style: this.style}).addTo(this.map);
 
     this.map.locate({
@@ -70,7 +67,7 @@ export class Tab1Page {
     this.map.setView(e.latlng);})
 
   .on('locationerror', (err) => {
-    alert(err.message);
+    alert('現在地を取得できませんでした。');
     this.map.fitWorld();
 })
 
