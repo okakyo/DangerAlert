@@ -20,7 +20,7 @@ app.use('/worlddata',world);
 
 app.use(function(req,res,next){
     res.status(404);
-    res.end('Not Found! :'+req.path);
+    res.redirect('/');
 })
 app.use((err,req,res,next)=>{
     res.status(500);
