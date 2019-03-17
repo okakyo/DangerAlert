@@ -42,7 +42,7 @@ export class Tab1Page {
     leaflet.tileLayer(`http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
       attributions: 'Made by Kyhohei Oka',
       maxZoom: 20,
-      minZoom: 5,
+      minZoom: 2,
     }).addTo(this.map);
     leaflet.geoJson(worldBorder, {style: this.style}).addTo(this.map);
 
