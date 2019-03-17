@@ -54,7 +54,7 @@ export class Tab1Page {
       setView: true,
       maxZoom: 5
     })
-  .on('locationfound', (e) => {
+  .on('load', (e) => {
     let markerGroup = leaflet.featureGroup();
     let circle:any= leaflet.circle(e.latlng,{
       radious: 50, 
