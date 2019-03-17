@@ -5,7 +5,6 @@ import leaflet from 'leaflet';
 import { Observable, } from 'rxjs';
 import * as Data from './custom.geo.json';
 
-
 //Jsonp通信を追加
 
 @Component({
