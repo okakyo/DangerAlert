@@ -40,7 +40,7 @@ export class Tab1Page {
     
     let worldBorder: Observable<any>=Data['features'];
     
-    this.map = leaflet.map('map').fitWorld();
+    this.map = leaflet.map('map')
     leaflet.tileLayer(`http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
       attributions: 'Made by Kyhohei Oka',
       maxZoom: 20,
@@ -54,7 +54,7 @@ export class Tab1Page {
       setView: true,
       maxZoom: 5
     })
-  .on('load', (e) => {
+  .on('locationfound', (e) => {
     let markerGroup = leaflet.featureGroup();
     let circle:any= leaflet.circle(e.latlng,{
       radious: 50, 
@@ -66,10 +66,12 @@ export class Tab1Page {
     markerGroup.addLayer(circle)
       .bindPopup('現在ここにいます。<br/>現在地：<strong>日本</strong><br/>危険度：<strong id="score">2</strong><br/><a>くわしくはこちら</a>')
       .openPopup();
-    this.map.addLayer(markerGroup);})
+    this.map.addLayer(markerGroup);
+    this.map.setView(e.latlng);})
 
   .on('locationerror', (err) => {
     alert(err.message);
+    this.map.fitWorld();
 })
 
 }
