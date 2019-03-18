@@ -4,6 +4,7 @@ import leaflet from 'leaflet';
 
 import { Observable, } from 'rxjs';
 import * as Data from './custom.geo.json';
+import { mapChildrenIntoArray } from '@angular/router/src/url_tree';
 
 //Jsonp通信を追加
 
@@ -21,7 +22,34 @@ export class Tab1Page {
   ionViewDidEnter() {
     this.loadmap();
   }
-  
+  highLight(e){
+    var layer=e.target;
+
+    layer.setStyle({
+      weight:7,
+      color:'#666',
+      dashArray:'',
+      fillOpacity:0.7
+    });
+    if(!leaflet.Browser.ie && !leaflet.Browser.opera && !leaflet.Browser.edge)
+      layer.bringToFront();
+  }
+  resetHighLight(e){
+    var geojson:any;
+    geojson.resetStyle(e.target);
+  }
+
+  zoomToFeature(e){
+    this.map.fitBounds(e.target.getBounds());
+  }
+
+  onEachFeature(feature,layer){
+    layer.on({
+      mouseover:this.highLight,
+      mouseout:this.resetHighLight,
+      click:this.zoomToFeature}
+    )
+  }
   style(feature){
     var d:number= feature.properties.security;
     return {
@@ -44,7 +72,7 @@ export class Tab1Page {
       maxZoom: 20,
       minZoom: 2,
     }).addTo(this.map);
-    leaflet.geoJson(worldBorder, {style: this.style}).addTo(this.map);
+    leaflet.geoJson(worldBorder, {style: this.style,onEachFeature:this.onEachFeature}).addTo(this.map);
 
     this.map.locate({
       setView: true,
@@ -57,6 +85,7 @@ export class Tab1Page {
       fillOpacity: 0.5, 
       color: 'blue', 
       fillColor: '#399ade'});
+
     let marker: any = leaflet.marker([e.latitude, e.longitude]);
     markerGroup.addLayer(marker)
     markerGroup.addLayer(circle)
