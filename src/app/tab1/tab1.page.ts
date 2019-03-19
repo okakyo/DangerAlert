@@ -78,7 +78,7 @@ export class Tab1Page {
     this.map.setView(e.latlng);})
 
   .on('locationerror', (err) => {
-    alert('現在地を取得できませんでした。');
+    alert('現在地を取得できませんでした。GPS の設定を ON にしてください。');
     this.map.setView([35.3622222, 138.7313889], 5);
 })
 
