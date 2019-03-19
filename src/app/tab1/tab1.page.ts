@@ -79,7 +79,7 @@ export class Tab1Page {
 
   .on('locationerror', (err) => {
     alert('現在地を取得できませんでした。');
-    this.map.fitWorld();
+    this.map.setView([35.3622222, 138.7313889], 5);
 })
 
 }
