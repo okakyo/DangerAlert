@@ -4,6 +4,7 @@ import leaflet from 'leaflet';
 
 import { Observable, } from 'rxjs';
 import * as Data from './custom.geo.json';
+import { getLContext } from '@angular/core/src/render3/context_discovery';
 
 //Jsonp通信を追加
 
@@ -45,18 +46,7 @@ export class Tab1Page {
     }
   }
   
-  loadmap() {
-
-    let worldBorder: Observable<any>=Data['features'];
-    
-    this.map = leaflet.map('map');
-    leaflet.tileLayer(`http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
-      attributions: 'Made by Kyhohei Oka',
-      maxZoom: 20,
-      minZoom: 2,
-    }).addTo(this.map);
-    leaflet.geoJson(worldBorder, {style: this.style}).addTo(this.map);
-
+  getLocation(){
     this.map.locate({
       setView: true,
       maxZoom: 5
@@ -80,7 +70,24 @@ export class Tab1Page {
   .on('locationerror', (err) => {
     alert('現在地を取得できませんでした。GPS の設定を ON にしてください。');
     this.map.setView([35.3622222, 138.7313889], 5);
-})
+  })
+  }
+  loadmap() {
 
-}
+    let worldBorder: Observable<any>=Data['features'];
+    this.map = leaflet.map('map');
+    leaflet.tileLayer(`http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
+      attributions: 'Made by Kyhohei Oka',
+      maxZoom: 20,
+      minZoom: 2,
+    }).addTo(this.map);
+    leaflet.geoJson(worldBorder, {style: this.style}).addTo(this.map);
+    this.getLocation()
+  }
+  onButtonClick(){
+    this.getLocation();
+  }
+
+
+
 }
