@@ -7,6 +7,7 @@ var fs=require('fs');
 var https=require('https');
 data=JSON.parse(fs.readFileSync('./src/app/tab1/custom.geo.json'),'utf8')
 var CronJob=require('cron').CronJob;
+
 const URL="https://www.travel-advisory.info/api";
 function ChangeJson(){
     return https.get(URL,function(res){
@@ -33,7 +34,8 @@ for(country in countries.data){
     }
 }
 fs.writeFileSync('./src/app/tab1/custom.geo.json',JSON.stringify(data));
-console.log('Action Done!');
+date=new Date();
+console.log('Action Done! at '+date.getYear()+'/'+date.getMonth()+'/'+date.getDate);
     }).on('error',function(e){
       console.log(e.message);
     })
