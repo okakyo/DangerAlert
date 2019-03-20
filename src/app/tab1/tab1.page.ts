@@ -4,7 +4,6 @@ import leaflet from 'leaflet';
 
 import { Observable, } from 'rxjs';
 import * as Data from './custom.geo.json';
-import { getLContext } from '@angular/core/src/render3/context_discovery';
 
 //Jsonp通信を追加
 
@@ -13,7 +12,6 @@ import { getLContext } from '@angular/core/src/render3/context_discovery';
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
-
 export class Tab1Page {
   @ViewChild('map') mapContainer: ElementRef;
   map: any;
@@ -61,11 +59,12 @@ export class Tab1Page {
 
     let marker: any = leaflet.marker([e.latitude, e.longitude]);
     markerGroup.addLayer(marker)
-    markerGroup.addLayer(circle)
-      .bindPopup('現在ここにいます。<br/>現在地：<strong>日本</strong><br/>危険度：<strong id="score">2</strong><br/><a>くわしくはこちら</a>')
+      .addLayer(circle)
+      .bindPopup('現在ここにいます。<br/>現在地：<strong id="your_country">日本</strong><br/>危険度：<strong id="your_score">2</strong><br/><a>くわしくはこちら</a>')
       .openPopup();
     this.map.addLayer(markerGroup);
-    this.map.setView(e.latlng);})
+    this.map.setView(e.latlng);
+  })
 
   .on('locationerror', (err) => {
     alert('現在地を取得できませんでした。GPS の設定を ON にしてください。');
