@@ -5,7 +5,18 @@ import leaflet from 'leaflet';
 import { Observable, } from 'rxjs';
 import * as Data from './custom.geo.json';
 
-//Jsonp通信を追加
+
+function highLight(e){
+  var layer=e.target;
+
+  layer.setStyle({
+    weight:7,
+    color:'#666',
+    dashArray:'',
+    fillOpacity:0.7
+  });
+}
+
 
 @Component({
   selector: 'app-tab1',
@@ -20,16 +31,7 @@ export class Tab1Page {
   ionViewDidEnter() {
     this.loadmap();
   }
-  highLight(e){
-    var layer=e.target;
-
-    layer.setStyle({
-      weight:7,
-      color:'#666',
-      dashArray:'',
-      fillOpacity:0.7
-    });
-  }
+  
 
   
   style(feature){
@@ -43,7 +45,19 @@ export class Tab1Page {
       fillOpacity: 0.5
     }
   }
-  
+  onEachFeature(feature,layer){
+  layer.on({
+    mouseover: highLight,
+    mouseout: this.resetHighLight,
+    click: this.zoomToFeature,
+  })
+}
+resetHighLight(e){
+  leaflet.geoJson.resetStyle(e.target);
+}
+ zoomToFeature(e){
+  this.map.fitBounds(e.target.getBounds());
+}
   getLocation(){
     this.map.locate({
       setView: true,
@@ -86,7 +100,4 @@ export class Tab1Page {
   onButtonClick(){
     this.getLocation();
   }
-
-
-
 }
