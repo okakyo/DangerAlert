@@ -74,7 +74,7 @@ export class Tab1Page {
   loadmap() {
 
     let worldBorder: Observable<any>=Data['features'];
-    this.map = leaflet.map('map');
+    this.map = leaflet.map('map',{worldCopyJump: 'true'});
     leaflet.tileLayer(`http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
       attributions: 'Made by Kyhohei Oka',
       maxZoom: 20,
