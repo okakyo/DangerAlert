@@ -91,7 +91,7 @@ app.use((err,req,res,next)=>{
 });
 app.set('port',process.env.PORT||PORT)
 app.listen(app.get('port'),()=>{
+    cron.start();
     console.log(`The server is running at port`+app.get('port'));
 });
 
-cron.start();
