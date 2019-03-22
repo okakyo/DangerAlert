@@ -61,7 +61,7 @@ AppendCountry={"Dominican Rep.":"Dominican Republic",
                 "Solomon Is.":"Solomon Islands",
                 "N. Cyprus":"Cyprus"
 }
-var cron =new CronJob('00 * * * * *',()=> {
+var cron =new CronJob('00 00 10 * * *',()=> {
     ChangeJson();
     console.log('Changed the Json');
     },null,true
