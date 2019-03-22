@@ -35,7 +35,7 @@ for(country in countries.data){
 }
 fs.writeFileSync('./src/app/tab1/custom.geo.json',JSON.stringify(data));
 date=new Date();
-console.log('Action Done! at '+date.getYear()+'/'+date.getMonth()+'/'+date.getDate);
+console.log('Action Done! at '+date.getFullYear()+'/'+date.getMonth()+'/'+date.getDate);
     }).on('error',function(e){
       console.log(e.message);
     })
@@ -61,11 +61,11 @@ AppendCountry={"Dominican Rep.":"Dominican Republic",
                 "Solomon Is.":"Solomon Islands",
                 "N. Cyprus":"Cyprus"
 }
-var cron =new CronJob({cronTime:'00 00 10 * * *',
-onTick:()=>{
-        ChangeJson()
-    },
-})
+var cron =new CronJob('00 00 10 * * *',()=> {
+    ChangeJson();
+    console.log('Changed the Json');
+    },null,true
+)
 
 app=express();
 app.use(express.static(__dirname+'/www'))
@@ -91,6 +91,7 @@ app.use((err,req,res,next)=>{
 });
 app.set('port',process.env.PORT||PORT)
 app.listen(app.get('port'),()=>{
-    cron.start();
     console.log(`The server is running at port`+app.get('port'));
 });
+
+cron.start();
