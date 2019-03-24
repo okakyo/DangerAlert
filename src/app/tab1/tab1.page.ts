@@ -39,10 +39,10 @@ export class Tab1Page {
     return {
       fillColor:  d>4 ? 'red' :d>3 ? 'orange': d>2 ? 'yellow' : d>=1 ? '#43FF6B': 'grey' ,
       weight: 5,
-      opacity: 0.3,
+      opacity: 0.5,
       color: 'white',
       dashArray: '3',
-      fillOpacity: 0.3
+      fillOpacity: 0.5
     }
   }
   onEachFeature(feature,layer){
