@@ -5,7 +5,13 @@ import leaflet from 'leaflet';
 import { Observable, } from 'rxjs';
 import * as Data from './custom.geo.json';
 
-
+var worldBorder: Observable<any>=Data['features'];
+var leaf=leaflet.tileLayer(`http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
+      attributions: 'Made by Kyhohei Oka',
+      maxZoom: 20,
+      minZoom: 2,
+    })
+var geo=leaflet.geoJson(worldBorder, {style:　style, onEachFeature: onEachFeature});
 function highLight(e){
   var layer=e.target;
 
@@ -17,24 +23,18 @@ function highLight(e){
   });
 }
 
+function onEachFeature(feature,layer){
+  layer.on({
+    mouseover: highLight,
+    mouseout: resetHighLight,
+  })
+}
 
-@Component({
-  selector: 'app-tab1',
-  templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss']
-})
-export class Tab1Page {
-  @ViewChild('map') mapContainer: ElementRef;
-  map: any;
-  constructor(public navCtrl: NavController){}
-  
-  ionViewDidEnter() {
-    this.loadmap();
-  }
-  
+function resetHighLight(e){
+  geo.resetStyle(e.target);
+}
 
-  
-  style(feature){
+function style(feature){
     var d:number= feature.properties.security;
     return {
       fillColor:  d>4 ? 'red' :d>3 ? 'orange': d>2 ? 'yellow' : d>=1 ? '#43FF6B': 'grey' ,
@@ -45,19 +45,24 @@ export class Tab1Page {
       fillOpacity: 0.5
     }
   }
-  onEachFeature(feature,layer){
-  layer.on({
-    mouseover: highLight,
-    mouseout: this.resetHighLight,
-    click: this.zoomToFeature,
-  })
-}
-resetHighLight(e){
-  leaflet.geoJson.resetStyle(e.target);
-}
- zoomToFeature(e){
-  this.map.fitBounds(e.target.getBounds());
-}
+@Component({
+  selector: 'app-tab1',
+  templateUrl: 'tab1.page.html',
+  styleUrls: ['tab1.page.scss']
+})
+
+//　クラスの実装内容
+
+export class Tab1Page {
+  @ViewChild('map') mapContainer: ElementRef;
+  map: any;
+  constructor(public navCtrl: NavController){}
+  
+  ionViewDidEnter() {
+    this.loadmap();
+  }
+
+
   getLocation(){
     this.map.locate({
       setView: true,
@@ -86,15 +91,9 @@ resetHighLight(e){
   })
   }
   loadmap() {
-
-    let worldBorder: Observable<any>=Data['features'];
-    this.map = leaflet.map('map',{worldCopyJump: 'true'});
-    leaflet.tileLayer(`http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
-      attributions: 'Made by Kyhohei Oka',
-      maxZoom: 20,
-      minZoom: 2,
-    }).addTo(this.map);
-    leaflet.geoJson(worldBorder, {style: this.style}).addTo(this.map);
+    this.map =leaflet.map('map',{worldCopyJump: 'true'});
+    leaf.addTo(this.map);
+    geo.addTo(this.map);
     this.getLocation()
   }
   onButtonClick(){
