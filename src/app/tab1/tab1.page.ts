@@ -4,23 +4,26 @@ import leaflet from 'leaflet';
 
 import { Observable, } from 'rxjs';
 import * as Data from './custom.geo.json';
-
+//jsonファイルより、国境、国の危険状態を取得
 var worldBorder: Observable<any>=Data['features'];
+
+//世界地図のデータを取得
 var leaf=leaflet.tileLayer(`http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
       attributions: 'Made by Kyhohei Oka',
       maxZoom: 20,
       minZoom: 2,
     })
-var geo=leaflet.geoJson(worldBorder, {style:　style, onEachFeature: onEachFeature});
+// 地図に国の情報を地図に載せる
+
 function highLight(e){
   var layer=e.target;
-
   layer.setStyle({
     weight:7,
     color:'#666',
     dashArray:'',
     fillOpacity:0.7
   });
+  info.update(layer.feature.properties);
 }
 
 function onEachFeature(feature,layer){
@@ -32,12 +35,16 @@ function onEachFeature(feature,layer){
 
 function resetHighLight(e){
   geo.resetStyle(e.target);
+  info.update();
+}
+function getColor(d){
+  return d>4 ? 'red' :d>3 ? 'orange': d>2 ? 'yellow' : d>=1 ? '#43FF6B': 'grey'
 }
 
 function style(feature){
     var d:number= feature.properties.security;
     return {
-      fillColor:  d>4 ? 'red' :d>3 ? 'orange': d>2 ? 'yellow' : d>=1 ? '#43FF6B': 'grey' ,
+      fillColor: getColor(d) ,
       weight: 5,
       opacity: 0.5,
       color: 'white',
@@ -45,6 +52,35 @@ function style(feature){
       fillOpacity: 0.5
     }
   }
+var geo=leaflet.geoJson(worldBorder, {style:　style, onEachFeature: onEachFeature});
+
+//各国の国の詳細な情報を取得
+var info=leaflet.control();
+
+info.onAdd=function(map){
+  this._div=leaflet.DomUtil.create('div', 'infomation');
+  this.update();
+  return this._div;
+}
+info.update=function(props){
+  this._div.innerHTML= '<h4>海外の危険状態</h4>' + (props ? '<b>' +
+  props.name + '</b><br/>' + '危険度:' + props.security : '気になる国をクリックしてください。')
+};
+
+var legend=leaflet.control({position:'bottomright'});
+
+legend.onAdd=function(map){
+  var div=leaflet.DomUtil.create('div', 'infomation legend'),
+  grades=[0,1,2,3,4],
+  label=[];
+
+  for(var i=0;i<grades.length;i++){
+    div.innnerHTML+='<i style="background:'+getColor+'"></i>'
+    +grades[i]+(grades[i+1]?'&ndash;'+grades[i+1]+'<br>':'&ndash;');}
+  
+  return div
+}
+
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -61,7 +97,6 @@ export class Tab1Page {
   ionViewDidEnter() {
     this.loadmap();
   }
-
 
   getLocation(){
     this.map.locate({
@@ -94,6 +129,9 @@ export class Tab1Page {
     this.map =leaflet.map('map',{worldCopyJump: 'true'});
     leaf.addTo(this.map);
     geo.addTo(this.map);
+    info.addTo(this.map);
+    legend.addTo(this.map);
+    
     this.getLocation()
   }
   onButtonClick(){
