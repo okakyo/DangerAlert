@@ -72,7 +72,6 @@ var legend=leaflet.control({position:'bottomright'});
 legend.onAdd=function(map){
   var div=leaflet.DomUtil.create('div', 'infomation legend'),
   grades=[0,1,2,3,4],
-  label=[];
 
   for(var i=0;i<grades.length;i++){
     div.innnerHTML+='<i style="background:'+getColor+'"></i>'
