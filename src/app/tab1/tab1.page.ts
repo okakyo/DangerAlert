@@ -71,7 +71,7 @@ var legend=leaflet.control({position:'bottomright'});
 
 legend.onAdd=function(map){
   var div=leaflet.DomUtil.create('div', 'infomation legend'),
-  grades=[0,1,2,3,4],
+  grades=[0,1,2,3,4]
 
   for(var i=0;i<grades.length;i++){
     div.innnerHTML+='<i style="background:'+getColor+'"></i>'
@@ -126,11 +126,10 @@ export class Tab1Page {
   }
   loadmap() {
     this.map =leaflet.map('map',{worldCopyJump: 'true'});
-    leaf.addTo(this.map);
-    geo.addTo(this.map);
     info.addTo(this.map);
     legend.addTo(this.map);
-    
+    leaf.addTo(this.map);
+    geo.addTo(this.map);
     this.getLocation()
   }
   onButtonClick(){
