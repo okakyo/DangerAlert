@@ -64,7 +64,7 @@ info.onAdd=function(map){
 }
 info.update=function(props){
   this._div.innerHTML= '<h4>海外の危険状態</h4>' + (props ? '<b>' +
-  props.name + '</b><br/>' + '危険度:' + props.security : '気になる国をクリックしてください。')
+  props.jp_name + '</b><br/>' + '危険度:' + props.security : '気になる国をクリックしてください。')
 };
 
 var legend=leaflet.control({position:'bottomright'});
