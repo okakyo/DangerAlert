@@ -2,6 +2,7 @@ const express=require('express');
 const accounts=require('./server/accounts')
 const world=require('./server/world')
 const bodyparser=require('body-parser');
+const puppeteer=require('puppeteer');
 const PORT=8100;
 var fs=require('fs');
 var https=require('https');
@@ -17,22 +18,50 @@ function ChangeJson(){
         body+=chunk;
     });
     res.on('end',function(chunk){
-      countries=JSON.parse(body);for(key in data.features){
+      countries=JSON.parse(body);
+      for(key in data.features){
         get_name=data.features[key].properties.name;
-        if(get_name in AppendCountry==true){
+        if(get_name in AppendCountry==true)
             get_name=AppendCountry[get_name]
+
+        for(country in countries.data){
+            country_name=countries.data[country].name
+                if(get_name===country_name){
+                    setData=data.features[key].properties
+                    setData.security=countries.data[country].advisory.score;
+                    setData.update=countries.data[country].advisory.updated
+                    break
+                }
+            }
         }
 
-for(country in countries.data){
-    country_name=countries.data[country].name
-        if(get_name===country_name){
-            setData=data.features[key].properties
-            setData.security=countries.data[country].advisory.score;
-            setData.update=countries.data[country].advisory.updated
-            break
+//この中に、puppeteer の実装を行う。
+//サーバーサイドでエラーが生じたら、その都度対策を考える。
+
+(async()=>{
+    const browser= await puppeteer.launch({args:[
+        '--no-sandbox',
+        '--disable-setuid-sandbox'
+    ]});
+    const page=await browser.newPage();
+    for(key in data.features){
+        var setData=data.features[key].properties;       
+        var html='申し訳ございません。ニュースを取得できませんでした。';
+        if(setData.URL){
+            await page.goto(`https://www.anzen.mofa.go.jp${setData.URL}`);
+            
+            var html=await page.$$eval('.kiken_unit',e=>{
+                return e.length==1?e[0].innerText:e[1].innerText;
+                });
+            
         }
+        setData.news=html;
+        await page.waitFor(1000);
     }
-}
+    browser.close();
+    
+})();
+
 fs.writeFileSync('./src/app/tab1/custom.geo.json',JSON.stringify(data));
 date=new Date();
 console.log('Action Done! at '+date.getFullYear()+'/'+date.getMonth()+'/'+date.getDate());
