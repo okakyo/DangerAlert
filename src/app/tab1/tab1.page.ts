@@ -6,7 +6,7 @@ import { Observable, } from 'rxjs';
 import * as Data from './custom.geo.json';
 //jsonファイルより、国境、国の危険状態を取得
 var worldBorder: Observable<any>=Data['features'];
-
+var before=null;
 //世界地図のデータを取得
 var leaf=leaflet.tileLayer(`http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
       attributions: 'Made by Kyhohei Oka',
@@ -23,20 +23,38 @@ function highLight(e){
     dashArray:'',
     fillOpacity:0.7
   });
+  
+}
+function resetHighLight(e){
+  if(e.target!=before)
+   geo.resetStyle(e.target);
+  
+}
+function clickFeature(e){
+  
+  if (before!=null)
+    geo.resetStyle(before);
+  
+  var layer =e.target;
+  layer.setStyle({
+    weight:7,
+    color:'#666',
+    dashArray:'',
+    fillOpacity:0.7
+  });
   info.update(layer.feature.properties);
+  before=layer;
 }
 
 function onEachFeature(feature,layer){
   layer.on({
     mouseover: highLight,
     mouseout: resetHighLight,
+    click: clickFeature
   })
 }
 
-function resetHighLight(e){
-  geo.resetStyle(e.target);
-  info.update();
-}
+
 function getColor(d){
   return d>4 ? 'red' :d>3 ? 'orange': d>2 ? 'yellow' : d>=1 ? '#43FF6B': 'grey'
 }
@@ -64,7 +82,7 @@ info.onAdd=function(map){
 }
 info.update=function(props){
   this._div.innerHTML= '<h4>海外の危険状態</h4>' + (props ? '<b>' +
-  props.jp_name + '</b><br/>' + '危険度:' + props.security : '気になる国にポインターをのせて下さい。')
+  props.jp_name + '</b><br/>' + '危険度:' + props.security : '気になる国をクリックしてください。')
 };
 
 var legend=leaflet.control({position:'bottomright'});
