@@ -82,18 +82,19 @@ info.onAdd=function(map){
 }
 info.update=function(props){
   this._div.innerHTML= '<h4>海外の危険状態</h4>' + (props ? '<b>' +
-  props.jp_name + '</b><br/><b>危険度:' + props.security + `</b><br/><b>ニュース:${props.news}<a href="https://www.anzen.mofa.go.jp${props.URL}">くわしくはこちら</a>` : '気になる国をクリックしてください。')
+  props.jp_name + '</b><br/><b>危険度:' + props.security + `</b><br/><b>ニュース:</b><br/>${props.news}<br><a href="https://www.anzen.mofa.go.jp${props.URL}">くわしくはこちら</a>` : '気になる国をクリックしてください。')
 };
 
 var legend=leaflet.control({position:'bottomleft'});
 
 legend.onAdd=function(map){
   this.div=leaflet.DomUtil.create('div', 'information legend')
-  var grades=[0,1,2,3,4]
+  var grades=[1,2,3,4]
 
   for(var i=0;i<grades.length;i++){
-    this.div.innerHTML+='<il style="background:'+getColor(grades[i] + 1)+'"></il>'
-    +grades[i]+(grades[i+1]?'&ndash;'+grades[i+1]+'<br>':'&ndash;');}
+    this.div.innerHTML+='<i style="background:'+getColor(grades[i] + 1)+'"></i>'
+    +grades[i]+'&ndash;'+(grades[i+1] ?grades[i+1]+'<br/>':'');
+  }
   
   return this.div
 }
