@@ -82,20 +82,20 @@ info.onAdd=function(map){
 }
 info.update=function(props){
   this._div.innerHTML= '<h4>海外の危険状態</h4>' + (props ? '<b>' +
-  props.jp_name + '</b><br/><b>危険度:' + props.security + `</b><br/><b>ニュース:${props.news}<a href="https://www.anzen.mofa.go.jp${props.URL}">くわしくはこちら</a>` : '気になる国をクリックしてください。')
+  props.jp_name + '</b><br/><b>危険度:' + props.security + `</b><br/><a href="https://www.anzen.mofa.go.jp${props.URL}">くわしくはこちら</a>` : '気になる国をクリックしてください。')
 };
 
-var legend=leaflet.control({position:'bottomright'});
+var legend=leaflet.control({position:'bottomleft'});
 
 legend.onAdd=function(map){
-  var div=leaflet.DomUtil.create('div', 'infomation legend'),
-  grades=[0,1,2,3,4]
+  this.div=leaflet.DomUtil.create('div', 'infomation legend')
+  var grades=[0,1,2,3,4]
 
   for(var i=0;i<grades.length;i++){
-    div.innnerHTML+='<i style="background:'+getColor+'"></i>'
+    this.div.innerHTML+='<il style="background:'+getColor(grades[i] + 1)+'"></il>'
     +grades[i]+(grades[i+1]?'&ndash;'+grades[i+1]+'<br>':'&ndash;');}
   
-  return div
+  return this.div
 }
 
 @Component({
