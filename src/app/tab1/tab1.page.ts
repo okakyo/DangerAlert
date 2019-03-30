@@ -92,7 +92,7 @@ legend.onAdd=function(map){
   var grades=[1,2,3,4]
 
   for(var i=0;i<grades.length;i++){
-    this.div.innerHTML+='<i style="background:'+getColor(grades[i] + 1)+'"></i>'
+    this.div.innerHTML+='<h3>危険度レベル</h3><br/><i style="background:'+getColor(grades[i] + 1)+'"></i>'
     +grades[i]+'&ndash;'+(grades[i+1] ?grades[i+1]+'<br/>':'');
   }
   
