@@ -76,7 +76,7 @@ var geo=leaflet.geoJson(worldBorder, {style:　style, onEachFeature: onEachFeatu
 var info=leaflet.control();
 
 info.onAdd=function(map){
-  this._div=leaflet.DomUtil.create('div', 'infomation');
+  this._div=leaflet.DomUtil.create('div', 'information');
   this.update();
   return this._div;
 }
@@ -88,7 +88,7 @@ info.update=function(props){
 var legend=leaflet.control({position:'bottomleft'});
 
 legend.onAdd=function(map){
-  this.div=leaflet.DomUtil.create('div', 'infomation legend')
+  this.div=leaflet.DomUtil.create('div', 'information legend')
   var grades=[0,1,2,3,4]
 
   for(var i=0;i<grades.length;i++){
