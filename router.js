@@ -10,6 +10,28 @@ data=JSON.parse(fs.readFileSync('./src/app/tab1/custom.geo.json'),'utf8')
 var CronJob=require('cron').CronJob;
 
 const URL="https://www.travel-advisory.info/api";
+async function getData(){
+    const browser= await puppeteer.launch({args:[
+        '--no-sandbox',
+        '--disable-setuid-sandbox'
+    ]});
+    const page=await browser.newPage();
+    for(key in data.features){
+        var setData=data.features[key].properties;       
+        var html='申し訳ございません。ニュースを取得できませんでした。';
+        if(setData.URL){
+            await page.goto(`https://www.anzen.mofa.go.jp${setData.URL}`);
+            
+            var html=await page.$$eval('.kiken_unit',e=>{
+                return e.length==1?e[0].innerText:e[1].innerText;
+                });
+            
+        }
+        setData.news=html;
+        await page.waitFor(1000);
+    }
+    browser.close();
+}
 function ChangeJson(){
     return https.get(URL,function(res){
     var body='';
@@ -38,29 +60,7 @@ function ChangeJson(){
 //この中に、puppeteer の実装を行う。
 //サーバーサイドでエラーが生じたら、その都度対策を考える。
 
-(async()=>{
-    const browser= await puppeteer.launch({args:[
-        '--no-sandbox',
-        '--disable-setuid-sandbox'
-    ]});
-    const page=await browser.newPage();
-    for(key in data.features){
-        var setData=data.features[key].properties;       
-        var html='申し訳ございません。ニュースを取得できませんでした。';
-        if(setData.URL){
-            await page.goto(`https://www.anzen.mofa.go.jp${setData.URL}`);
-            
-            var html=await page.$$eval('.kiken_unit',e=>{
-                return e.length==1?e[0].innerText:e[1].innerText;
-                });
-            
-        }
-        setData.news=html;
-        await page.waitFor(1000);
-    }
-    browser.close();
-    
-})();
+getData()
 
 fs.writeFileSync('./src/app/tab1/custom.geo.json',JSON.stringify(data));
 date=new Date();
