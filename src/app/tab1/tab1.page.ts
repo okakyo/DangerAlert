@@ -90,9 +90,9 @@ var legend=leaflet.control({position:'bottomleft'});
 legend.onAdd=function(map){
   this.div=leaflet.DomUtil.create('div', 'information legend')
   var grades=[1,2,3,4]
-
+  this.div.innerHTML='<h5>危険度レベル</h5><br/>'
   for(var i=0;i<grades.length;i++){
-    this.div.innerHTML+='<h3>危険度レベル</h3><br/><i style="background:'+getColor(grades[i] + 1)+'"></i>'
+    this.div.innerHTML+='<i style="background:'+getColor(grades[i] + 1)+'"></i>'
     +grades[i]+'&ndash;'+(grades[i+1] ?grades[i+1]+'<br/>':'');
   }
   
