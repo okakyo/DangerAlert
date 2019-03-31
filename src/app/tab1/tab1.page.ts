@@ -4,6 +4,9 @@ import leaflet from 'leaflet';
 
 import { Observable, } from 'rxjs';
 import * as Data from './custom.geo.json';
+
+import { SemiModalPage } from '../semi-modal/semi-modal.page';
+
 //jsonファイルより、国境、国の危険状態を取得
 var worldBorder: Observable<any>=Data['features'];
 var before=null;
@@ -50,7 +53,7 @@ function onEachFeature(feature,layer){
   layer.on({
     mouseover: highLight,
     mouseout: resetHighLight,
-    click: clickFeature
+    click: [clickFeature]
   })
 }
 
@@ -156,10 +159,17 @@ export class Tab1Page {
   }
 
   //Modal 機能の実装
-  /*
+  
   async showModal(){
-    const modal = await this.modalCtrl.create({});
-    modal.onDidDismiss(res=>{});
+    const modal = await this.modalCtrl.create({
+      component: SemiModalPage,
+      componentProps:{
+        Coutnry:'例',
+        DangerLevel:0,
+        NEWS:'こんにちは'
+      }
+    });
+
     modal.present();
-  }*/
+  }
 }

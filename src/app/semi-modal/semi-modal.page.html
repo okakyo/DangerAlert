@@ -1,12 +1,11 @@
-<ion-content>
-
+<ion-content (click)="close()">
 </ion-content>
 <ion-footer padding>
   <div>
     <ul>
-      <li>国名:</li>
-      <li>危険レベル</li>
-      <li>ニュース：</li>
+      <li>国名:{{Country}}</li>
+      <li>危険レベル:{{DangerLevel}}</li>
+      <li>ニュース：{{NEWS}}</li>
     </ul>
   </div>
 </ion-footer>

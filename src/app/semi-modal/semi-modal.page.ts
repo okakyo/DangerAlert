@@ -1,15 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-
+import {ModalController} from '@ionic/angular';
 @Component({
   selector: 'app-semi-modal',
   templateUrl: './semi-modal.page.html',
   styleUrls: ['./semi-modal.page.scss'],
 })
 export class SemiModalPage implements OnInit {
-
-  constructor() { }
+  Country:String;
+  DangerLevel:number;
+  NEWS: String;
+   constructor(public modalCtrl: ModalController) {}
 
   ngOnInit() {
+    console.log(`${this.Country}:${this.DangerLevel}:${this.NEWS}`);
+  }
+  closeModal(){
+    this.modalCtrl.dismiss();
   }
 
 }
