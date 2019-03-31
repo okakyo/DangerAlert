@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, Config } from '@ionic/angular';
+import { NavController, Config, ModalController } from '@ionic/angular';
 import leaflet from 'leaflet';
 
 import { Observable, } from 'rxjs';
@@ -110,7 +110,7 @@ legend.onAdd=function(map){
 export class Tab1Page {
   @ViewChild('map') mapContainer: ElementRef;
   map: any;
-  constructor(public navCtrl: NavController){}
+  constructor(public navCtrl: NavController,public modalCtrl:ModalController){}
   
   ionViewDidEnter() {
     this.loadmap();
@@ -154,4 +154,12 @@ export class Tab1Page {
   onButtonClick(){
     this.getLocation();
   }
+
+  //Modal 機能の実装
+  /*
+  async showModal(){
+    const modal = await this.modalCtrl.create({});
+    modal.onDidDismiss(res=>{});
+    modal.present();
+  }*/
 }
