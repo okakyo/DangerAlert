@@ -88,7 +88,7 @@ info.update=function(props){
 var legend=leaflet.control({position:'bottomleft'});
 
 legend.onAdd=function(map){
-  this.div=leaflet.DomUtil.create('div', 'information legend')
+  this.div=leaflet.DomUtil.create('div', 'info legend')
   var grades=[1,2,3,4]
   this.div.innerHTML='<h5>危険度レベル</h5><br/>'
   for(var i=0;i<grades.length;i++){
