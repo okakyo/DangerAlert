@@ -6,10 +6,16 @@ import { Observable, } from 'rxjs';
 import * as Data from './custom.geo.json';
 
 import { SemiModalPage } from '../semi-modal/semi-modal.page';
+import { groupBy } from 'rxjs/internal/operators/groupBy';
 
 //jsonファイルより、国境、国の危険状態を取得
 var worldBorder: Observable<any>=Data['features'];
 var before=null;
+
+var CountryName:String='未入力';
+var DangerLevel:number=null;
+var Info:String='気になる国をクリックしてください。';
+var InfoURL:string;
 //世界地図のデータを取得
 var leaf=leaflet.tileLayer(`http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
       attributions: 'Made by Kyhohei Oka',
@@ -45,15 +51,22 @@ function clickFeature(e){
     dashArray:'',
     fillOpacity:0.7
   });
-  info.update(layer.feature.properties);
+  getCountryInfo(e.latlng,layer.feature.properties);
   before=layer;
 }
+function getCountryInfo(latlng,props){
+  CountryName=props.jp_name;
+  DangerLevel=props.security;
+  Info=props.news;
+  InfoURL=props.URL;
+  
+};
 
 function onEachFeature(feature,layer){
   layer.on({
     mouseover: highLight,
     mouseout: resetHighLight,
-    click: [clickFeature]
+    click: clickFeature,
   })
 }
 
@@ -76,19 +89,10 @@ function style(feature){
 var geo=leaflet.geoJson(worldBorder, {style:　style, onEachFeature: onEachFeature});
 
 //各国の国の詳細な情報を取得
-var info=leaflet.control();
 
-info.onAdd=function(map){
-  this._div=leaflet.DomUtil.create('div', 'information');
-  this.update();
-  return this._div;
-}
-info.update=function(props){
-  this._div.innerHTML= '<h4>海外の危険状態</h4>' + (props ? '<b>' +
-  props.jp_name + '</b><br/><b>危険度:' + props.security + `</b><br/><b>ニュース:<a href="https://www.anzen.mofa.go.jp${props.URL}">くわしくはこちら</a></b><br/>${props.news}` : '気になる国をクリックしてください。')
-};
 
-var legend=leaflet.control({position:'bottomleft'});
+
+var legend=leaflet.control({});
 
 legend.onAdd=function(map){
   this.div=leaflet.DomUtil.create('div', 'info legend')
@@ -148,7 +152,6 @@ export class Tab1Page {
   }
   loadmap() {
     this.map =leaflet.map('map',{worldCopyJump: 'true'});
-    info.addTo(this.map);
     legend.addTo(this.map);
     leaf.addTo(this.map);
     geo.addTo(this.map);
@@ -164,9 +167,9 @@ export class Tab1Page {
     const modal = await this.modalCtrl.create({
       component: SemiModalPage,
       componentProps:{
-        Coutnry:'例',
-        DangerLevel:0,
-        NEWS:'こんにちは'
+        Country: CountryName,
+        DangerLevel: DangerLevel,
+        NEWS:Info
       }
     });
 

@@ -1,0 +1,11 @@
+app-modal-content{
+  opacity: 0;
+ion-content {
+  background-color: #fff;
+  .app-modal-content {
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+  }
+}
+}
