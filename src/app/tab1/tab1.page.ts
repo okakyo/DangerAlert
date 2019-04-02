@@ -11,11 +11,14 @@ import { groupBy } from 'rxjs/internal/operators/groupBy';
 //jsonファイルより、国境、国の危険状態を取得
 var worldBorder: Observable<any>=Data['features'];
 var before=null;
-
+ 
 var CountryName:String='未入力';
 var DangerLevel:number=null;
 var Info:String='気になる国をクリックしてください。';
-var InfoURL:string;
+var InfoURL:string='/';
+
+
+
 //世界地図のデータを取得
 var leaf=leaflet.tileLayer(`http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
       attributions: 'Made by Kyhohei Oka',
@@ -23,7 +26,7 @@ var leaf=leaflet.tileLayer(`http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, 
       minZoom: 2,
     })
 // 地図に国の情報を地図に載せる
-
+var map:any;
 function highLight(e){
   var layer=e.target;
   layer.setStyle({
@@ -41,9 +44,11 @@ function resetHighLight(e){
 }
 function clickFeature(e){
   
+  
+  
   if (before!=null)
     geo.resetStyle(before);
-  
+    
   var layer =e.target;
   layer.setStyle({
     weight:7,
@@ -52,6 +57,7 @@ function clickFeature(e){
     fillOpacity:0.7
   });
   getCountryInfo(e.latlng,layer.feature.properties);
+  
   before=layer;
 }
 function getCountryInfo(latlng,props){
@@ -59,6 +65,13 @@ function getCountryInfo(latlng,props){
   DangerLevel=props.security;
   Info=props.news;
   InfoURL=props.URL;
+  var InfoHTML:String=`
+    <button onClick="showModal()">詳細
+    </button>
+  `;
+  popup.setLatLng(latlng)
+  .setContent(InfoHTML)
+  .openOn(map);
   
 };
 
@@ -88,11 +101,13 @@ function style(feature){
   }
 var geo=leaflet.geoJson(worldBorder, {style:　style, onEachFeature: onEachFeature});
 
+
 //各国の国の詳細な情報を取得
 
+var popup=leaflet.popup();
 
 
-var legend=leaflet.control({});
+var legend=leaflet.control();
 
 legend.onAdd=function(map){
   this.div=leaflet.DomUtil.create('div', 'info legend')
@@ -130,15 +145,10 @@ export class Tab1Page {
     })
   .on('locationfound', (e) => {
     let markerGroup = leaflet.featureGroup();
-    let circle:any= leaflet.circle(e.latlng,{
-      radious: 50, 
-      fillOpacity: 0.5, 
-      color: 'blue', 
-      fillColor: '#399ade'});
+    
 
     let marker: any = leaflet.marker([e.latitude, e.longitude]);
     markerGroup.addLayer(marker)
-      .addLayer(circle)
       .bindPopup('現在ここにいます。<br/>現在地：<strong id="your_country">日本</strong><br/>危険度：<strong id="your_score">2</strong><br/><a>くわしくはこちら</a>')
       .openPopup();
     this.map.addLayer(markerGroup);
@@ -151,10 +161,12 @@ export class Tab1Page {
   })
   }
   loadmap() {
-    this.map =leaflet.map('map',{worldCopyJump: 'true'});
+    this.map =leaflet.map('map',{worldCopyJump: 'true'})
+    map=this.map;
     legend.addTo(this.map);
     leaf.addTo(this.map);
     geo.addTo(this.map);
+    
     this.getLocation()
   }
   onButtonClick(){
