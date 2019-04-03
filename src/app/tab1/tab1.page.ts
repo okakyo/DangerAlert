@@ -70,9 +70,6 @@ function getCountryInfo(latlng,props){
         <ion-card-title>${CountryName}</ion-cardltitle>
         <ion-card-subtitle>危険度：${DangerLevel}</ion-card-subtitle>
       </ion-card-header>
-      <ion-card-content>
-      ${Info}
-      </ion-card-content>
     </ion-card>
   `;
   popup.setLatLng(latlng)
