@@ -79,7 +79,7 @@ function onEachFeature(feature,layer){
     mouseover: highLight,
     mouseout: resetHighLight,
     click: clickFeature,
-    dbclick: this.showModal
+    dblclick:this.showModal()
     
   })
 }
