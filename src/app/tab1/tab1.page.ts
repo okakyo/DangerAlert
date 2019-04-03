@@ -79,7 +79,6 @@ function onEachFeature(feature,layer){
     mouseover: highLight,
     mouseout: resetHighLight,
     click: clickFeature,
-    dblclick:this.showModal()
     
   })
 }
@@ -162,7 +161,7 @@ export class Tab1Page {
   })
   }
   loadmap() {
-    this.map =leaflet.map('map',{worldCopyJump: 'true',doubleClickZoom:false})
+    this.map =leaflet.map('map',{worldCopyJump: 'true',doubleClickZoom:false}).on('dblclick',this.showModal())
     map=this.map;
     legend.addTo(this.map);
     leaf.addTo(this.map);
