@@ -65,12 +65,8 @@ function getCountryInfo(latlng,props){
   Info=props.news;
   InfoURL=props.URL;
   var InfoHTML:String=`
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>${CountryName}</ion-cardltitle>
-        <ion-card-subtitle>危険度：${DangerLevel}</ion-card-subtitle>
-      </ion-card-header>
-    </ion-card>
+    <h3>${CountryName}</h3><br/>
+    <h4>危険度${DangerLevel}</h4>
   `;
   popup.setLatLng(latlng)
   .setContent(InfoHTML)
