@@ -66,7 +66,7 @@ function getCountryInfo(latlng,props){
   InfoURL=props.URL;
   var InfoHTML:String=`
     <h3>${CountryName}</h3>
-    <h4>危険度：{DangerLevel}</h4>
+    <h4>危険度：${DangerLevel}</h4>
   `;
   popup.setLatLng(latlng)
   .setContent(InfoHTML)
@@ -79,6 +79,7 @@ function onEachFeature(feature,layer){
     mouseover: highLight,
     mouseout: resetHighLight,
     click: clickFeature,
+    
   })
 }
 
