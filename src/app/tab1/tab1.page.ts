@@ -161,7 +161,7 @@ export class Tab1Page {
   })
   }
   loadmap() {
-    this.map =leaflet.map('map',{worldCopyJump: 'true'}).on('dbclick',this.showModal)
+    this.map =leaflet.map('map',{worldCopyJump: 'true',doubleClickZoom:false}).on('dbclick',this.showModal())
     map=this.map;
     legend.addTo(this.map);
     leaf.addTo(this.map);
