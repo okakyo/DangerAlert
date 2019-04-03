@@ -6,7 +6,6 @@ import { Observable, } from 'rxjs';
 import * as Data from './custom.geo.json';
 
 import { SemiModalPage } from '../semi-modal/semi-modal.page';
-import { groupBy } from 'rxjs/internal/operators/groupBy';
 
 //jsonファイルより、国境、国の危険状態を取得
 var worldBorder: Observable<any>=Data['features'];
@@ -66,8 +65,15 @@ function getCountryInfo(latlng,props){
   Info=props.news;
   InfoURL=props.URL;
   var InfoHTML:String=`
-    <button onClick="showModal()">詳細
-    </button>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>${CountryName}</ion-cardltitle>
+        <ion-card-subtitle>危険度：${DangerLevel}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+      ${Info}
+      </ion-card-content>
+    </ion-card>
   `;
   popup.setLatLng(latlng)
   .setContent(InfoHTML)
@@ -185,6 +191,6 @@ export class Tab1Page {
       }
     });
 
-    modal.present();
+    await modal.present();
   }
 }
