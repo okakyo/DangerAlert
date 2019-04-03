@@ -1,7 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, Config, ModalController } from '@ionic/angular';
+import { NavController, Config, ModalController, Platform } from '@ionic/angular';
 import leaflet from 'leaflet';
-
 import { Observable, } from 'rxjs';
 import * as Data from './custom.geo.json';
 
@@ -187,4 +186,5 @@ export class Tab1Page {
 
     await modal.present();
   }
+  
 }

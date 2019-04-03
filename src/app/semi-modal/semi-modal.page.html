@@ -1,10 +1,13 @@
 <ion-content padding >
-<div class="">
-    <ul>
-      <li>国名:{{Country}}</li>
-      <li>危険レベル:{{DangerLevel}}</li>
-      <li>ニュース：{{NEWS}}</li>
-    </ul>
-  </div>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>国名:{{Country}}</ion-card-title>
+      <ion-card-subtitle>危険レベル:{{DangerLevel}}</ion-card-subtitle>
+    </ion-card-header>
+  <ion-card-content>
+    <ion-card-title>ニュース</ion-card-title>
+    {{Info}}
+  </ion-card-content>
+  </ion-card>
 </ion-content>
 
