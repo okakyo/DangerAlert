@@ -160,7 +160,7 @@ export class Tab1Page {
   })
   }
   loadmap() {
-    this.map =leaflet.map('map',{worldCopyJump: 'true',doubleClickZoom:false}).on('dblclick',this.showModal())
+    this.map =leaflet.map('map',{worldCopyJump: 'true',doubleClickZoom:false})
     map=this.map;
     legend.addTo(this.map);
     leaf.addTo(this.map);
@@ -186,5 +186,5 @@ export class Tab1Page {
 
     await modal.present();
   }
-  
+
 }
