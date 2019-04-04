@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content>
-  <div id="map" style="width: 100%;height:100%;">
+  <div id="map">
     <ion-fab vertical="center" horizontal="end">
       <ion-fab-button (click)="showModal()">
         <ion-icon name="information"></ion-icon>
@@ -18,5 +18,15 @@
         <ion-icon name="locate"></ion-icon>
       </ion-fab-button>
     </ion-fab>
+    <ion-card class="CountryInfo">
+      <ion-card-header primary>
+        <ion-card-title>国名:{{CountryName}}</ion-card-title>
+        <ion-card-subtitle>危険レベル:{{DangerLevel}}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-card-title>ニュース</ion-card-title>
+        {{Info}}
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>
