@@ -15,11 +15,9 @@ var DangerLevel:number=null;
 var Info:String='気になる国をクリックしてください。';
 var InfoURL:string='/';
 
-
-
 //世界地図のデータを取得
 var leaf=leaflet.tileLayer(`http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
-      attributions: 'Made by Kyhohei Oka',
+      attribution: 'Made by Kyhohei Oka',
       maxZoom: 20,
       minZoom: 2,
     })
@@ -33,17 +31,13 @@ function highLight(e){
     dashArray:'',
     fillOpacity:0.7
   });
-  
 }
+
 function resetHighLight(e){
   if(e.target!=before)
    geo.resetStyle(e.target);
-  
 }
 function clickFeature(e){
-  
-  
-  
   if (before!=null)
     geo.resetStyle(before);
     
@@ -78,7 +72,6 @@ function onEachFeature(feature,layer){
     mouseover: highLight,
     mouseout: resetHighLight,
     click: clickFeature,
-    
   })
 }
 
