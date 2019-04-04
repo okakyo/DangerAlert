@@ -3,6 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   { path: '', loadChildren: './tabs/tabs.module#TabsPageModule' },  { path: 'semi-modal', loadChildren: './semi-modal/semi-modal.module#SemiModalPageModule' },
+  { path: 'menu', loadChildren: './menu/menu.module#MenuPageModule' },
 
 ];
 @NgModule({

@@ -9,11 +9,11 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {SemiModalPageModule} from './semi-modal/semi-modal.module';
-
+import { MenuPageModule } from './menu/menu.module';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, SemiModalPageModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, MenuPageModule, SemiModalPageModule],
   providers: [
     StatusBar,
     SplashScreen,
