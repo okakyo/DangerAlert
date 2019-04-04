@@ -12,7 +12,7 @@ var before=null;
  
 var CountryName:String='未入力';
 var DangerLevel:number=null;
-var Info:String='気になる国をクリックしてください。';
+var Info:String= '気になる国をクリックしてください。';
 var InfoURL:string='/';
 
 
@@ -131,6 +131,9 @@ legend.onAdd=function(map){
 export class Tab1Page {
   @ViewChild('map') mapContainer: ElementRef;
   map: any;
+  CountryName:String=CountryName;
+  DangerLevel:Number=DangerLevel;
+  Info:String=Info;
   constructor(public navCtrl: NavController,public modalCtrl:ModalController){}
   
   ionViewDidEnter() {
