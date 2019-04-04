@@ -183,7 +183,7 @@ export class Tab1Page {
       componentProps:{
         Country: CountryName,
         DangerLevel: DangerLevel,
-        NEWS:Info
+        NEWS: Info
       }
     });
 
