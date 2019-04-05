@@ -41,9 +41,7 @@ function resetHighLight(e){
   
 }
 function clickFeature(e){
-  
-  
-  
+    
   if (before!=null)
     geo.resetStyle(before);
     
@@ -55,6 +53,7 @@ function clickFeature(e){
     fillOpacity:0.7
   });
   getCountryInfo(e.latlng,layer.feature.properties);
+  CountryInfo.update()
   
   before=layer;
 }
@@ -105,11 +104,33 @@ var geo=leaflet.geoJson(worldBorder, {style:　style, onEachFeature: onEachFeatu
 
 var popup=leaflet.popup();
 
+var CountryInfo=leaflet.control({position:'bottomleft'});
+
+CountryInfo.onAdd= function(map){
+  this._div=leaflet.DomUtil.create('div','info information');
+  this.update();
+  return this._div
+}
+CountryInfo.update=function(props){
+  this._div.innerHTML=`
+    <ion-card>
+      <ion-card-header>
+        <ion-title>${CountryName}</ion-title>
+        <ion-subtitle>危険度：${DangerLevel}<ion-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+      <ion-text>
+      ${Info}
+      </ion-text>
+      </ion-card-content>
+    </ion-card>
+  `
+}
 
 var legend=leaflet.control();
 
 legend.onAdd=function(map){
-  this.div=leaflet.DomUtil.create('div', 'info legend')
+  this.div=leaflet.DomUtil.create('div', 'info legend');
   var grades=[1,2,3,4]
   this.div.innerHTML='<h5>危険度レベル</h5><br/>'
   for(var i=0;i<grades.length;i++){
@@ -168,7 +189,7 @@ export class Tab1Page {
     legend.addTo(this.map);
     leaf.addTo(this.map);
     geo.addTo(this.map);
-    
+    CountryInfo.addTo(this.map);
     this.getLocation()
   }
   onButtonClick(){
