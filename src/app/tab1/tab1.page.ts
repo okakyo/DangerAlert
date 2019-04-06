@@ -198,17 +198,4 @@ export class Tab1Page {
 
   //Modal 機能の実装
   
-  async showModal(){
-    const modal = await this.modalCtrl.create({
-      component: SemiModalPage,
-      componentProps:{
-        Country: CountryName,
-        DangerLevel: DangerLevel,
-        NEWS: Info
-      }
-    });
-
-    await modal.present();
-  }
-
 }

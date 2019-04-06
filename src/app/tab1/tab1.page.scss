@@ -8,6 +8,7 @@
     width: 100px;
     font :14px;
     padding: 6px 8px;
+    margin-left: 0; 
     background: white;
     box-shadow: 0 0 15px rbga(0, 0, 0, 0.2);
     border-radius: 5px; 
@@ -24,6 +25,7 @@
     box-shadow: 0 0 15px rbga(0, 0, 0, 0.2);
     border-radius: 5px; 
 }
+
 
 .legend {
     line-height: 18px;
@@ -52,3 +54,4 @@
         max-height: 500px;
         overflow: auto;
     }
+
