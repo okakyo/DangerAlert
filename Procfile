@@ -1,1 +1,1 @@
-web: node router.js
+web: ng build & node router.js
