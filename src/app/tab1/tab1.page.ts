@@ -120,7 +120,7 @@ CountryInfo.onAdd= function(map){
 }
 CountryInfo.update=function(props){
   this._div.innerHTML=`
-    <ion-card style="width:408px;height:300px;margin-bottom:60px">
+    <ion-card style="max-width:408px;height:40%;">
       <ion-card-header color="primary">
         <ion-title>${CountryName}</ion-title>
         <ion-subtitle>危険度：${DangerLevel}<ion-subtitle>
