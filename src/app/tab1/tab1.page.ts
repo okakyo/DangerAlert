@@ -16,6 +16,7 @@ var Info:String= '気になる国をクリックしてください。';
 var InfoURL:string='/';
 
 
+var windowOn:boolean=true;
 
 //世界地図のデータを取得
 var leaf=leaflet.tileLayer(`http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
@@ -41,7 +42,6 @@ function resetHighLight(e){
   
 }
 function clickFeature(e){
-    
   if (before!=null)
     geo.resetStyle(before);
     
@@ -53,6 +53,11 @@ function clickFeature(e){
     fillOpacity:0.7
   });
   getCountryInfo(e.latlng,layer.feature.properties);
+  if (windowOn){
+    CountryInfo.addTo(map);
+    windowOn=false;
+  }  
+  else
   CountryInfo.update()
   
   before=layer;
@@ -113,7 +118,7 @@ CountryInfo.onAdd= function(map){
 }
 CountryInfo.update=function(props){
   this._div.innerHTML=`
-    <ion-card style="width:408px;height:400px">
+    <ion-card style="width:408px;height:400px;margin-bottom:60px">
       <ion-card-header color="primary">
         <ion-title>${CountryName}</ion-title>
         <ion-subtitle>危険度：${DangerLevel}<ion-subtitle>
@@ -189,11 +194,16 @@ export class Tab1Page {
     legend.addTo(this.map);
     leaf.addTo(this.map);
     geo.addTo(this.map);
-    CountryInfo.addTo(this.map);
+    
     this.getLocation()
   }
   onButtonClick(){
     this.getLocation();
+  }
+
+  closeWindow(){
+    CountryInfo.remove();
+    windowOn=true;
   }
 
   //Modal 機能の実装
