@@ -113,12 +113,14 @@ var CountryInfo=leaflet.control({position:'bottomleft'});
 
 CountryInfo.onAdd= function(map){
   this._div=leaflet.DomUtil.create('div','info information');
+  this._div.style.marginBottom=0;
+  this._div.style.marginLeft=0;
   this.update();
   return this._div
 }
 CountryInfo.update=function(props){
   this._div.innerHTML=`
-    <ion-card style="width:408px;height:400px;margin-bottom:60px">
+    <ion-card style="width:408px;height:300px;margin-bottom:60px">
       <ion-card-header color="primary">
         <ion-title>${CountryName}</ion-title>
         <ion-subtitle>危険度：${DangerLevel}<ion-subtitle>
