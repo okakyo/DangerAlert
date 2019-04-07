@@ -115,11 +115,12 @@ CountryInfo.onAdd= function(map){
   this._div=leaflet.DomUtil.create('div','info information');
   this._div.style.marginBottom=0;
   this._div.style.marginLeft=0;
-  leaflet.DomEvent.on(this._div,"click",leaflet.DomEvent.stopPropagation);    //ここ
-  leaflet.DomEvent.on(this._div,"mousedown",leaflet.DomEvent.stopPropagation);    //ここ
-  leaflet.DomEvent.on(this._div,"dblclick",leaflet.DomEvent.stopPropagation);    //ここ
-  leaflet.DomEvent.on(this._div,"mousewheel",leaflet.DomEvent.stopPropagation);
   this.update();
+  this._div.onclick=function(e){
+    e.preventDefault();
+    e.stopPropagation();
+      //drawControl.options.draw = true;
+  }
   return this._div
 }
 CountryInfo.update=function(props){
@@ -200,6 +201,7 @@ export class Tab1Page {
     legend.addTo(this.map);
     leaf.addTo(this.map);
     geo.addTo(this.map);
+
     
     this.getLocation()
   }
