@@ -115,9 +115,10 @@ CountryInfo.onAdd= function(map){
   this._div=leaflet.DomUtil.create('div','info information');
   this._div.style.marginBottom=0;
   this._div.style.marginLeft=0;
-  this._div.onclick=function(e){
-    e.stopPropagation();
-  }
+  leaflet.DomEvent.on(this._div,'click',leaflet.DomEvent.stopPropagation)
+  leaflet.DomEvent.on(this._div,'mousedown',leaflet.DomEvent.stopPropagation)
+  leaflet.DomEvent.on(this._div,'dblclick',leaflet.DomEvent.stopPropagation)
+  leaflet.DomEvent.on(this._div,'mousewheel',leaflet.DomEvent.stopPropagation)
   this.update();
   return this._div
 }
