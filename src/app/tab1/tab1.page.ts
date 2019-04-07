@@ -167,7 +167,8 @@ export class Tab1Page {
   CountryName:String=CountryName;
   DangerLevel:Number=DangerLevel;
   Info:String=Info;
-  constructor(public navCtrl: NavController,public modalCtrl:ModalController){}
+  ButtonLocation='start';
+  constructor(public navCtrl: NavController,public modalCtrl:ModalController,public plt:Platform){}
   
   ionViewDidEnter() {
     this.loadmap();
@@ -196,6 +197,9 @@ export class Tab1Page {
   })
   }
   loadmap() {
+    if(this.plt.is('mobile')){
+      this.ButtonLocation='end'
+    }
     this.map =leaflet.map('map',{worldCopyJump: 'true',doubleClickZoom:false})
     map=this.map;
     legend.addTo(this.map);
