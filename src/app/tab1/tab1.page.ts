@@ -110,7 +110,6 @@ var geo=leaflet.geoJson(worldBorder, {style:　style, onEachFeature: onEachFeatu
 var popup=leaflet.popup();
 
 var CountryInfo=leaflet.control({position:'bottomleft'});
-CountryInfo.id="Window"
 CountryInfo.onAdd= function(map){
   this._div=leaflet.DomUtil.create('div','info information');
   this._div.style.marginBottom=0;
@@ -119,7 +118,6 @@ CountryInfo.onAdd= function(map){
   this._div.onclick=function(e){
     e.preventDefault();
     e.stopPropagation();
-      //drawControl.options.draw = true;
   }
   return this._div
 }
@@ -186,7 +184,7 @@ export class Tab1Page {
 
     let marker: any = leaflet.marker([e.latitude, e.longitude]);
     markerGroup.addLayer(marker)
-      .bindPopup('現在ここにいます。<br/>現在地：<strong id="your_country">日本</strong><br/>危険度：<strong id="your_score">2</strong><br/><a>くわしくはこちら</a>')
+      .bindPopup('<h4>現在ここにいます。<h4><h4><a href="https://www.anzen.mofa.go.jp/trip/">くわしくはこちら</a></h4>')
       .openPopup();
     this.map.addLayer(markerGroup);
     this.map.setView(e.latlng);
