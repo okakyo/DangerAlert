@@ -110,7 +110,7 @@ var geo=leaflet.geoJson(worldBorder, {style:　style, onEachFeature: onEachFeatu
 var popup=leaflet.popup();
 
 var CountryInfo=leaflet.control({position:'bottomleft'});
-
+CountryInfo.id="Window"
 CountryInfo.onAdd= function(map){
   this._div=leaflet.DomUtil.create('div','info information');
   this._div.style.marginBottom=0;
@@ -125,10 +125,11 @@ CountryInfo.onAdd= function(map){
 }
 CountryInfo.update=function(props){
   this._div.innerHTML=`
-    <ion-card style="max-width:408px;height:40%;">
-      <ion-card-header color="primary">
+    <ion-card style="max-width:408px;max-height:180px;">
+        <ion-card-header color="primary">
         <ion-title>${CountryName}</ion-title>
         <ion-subtitle>危険度：${DangerLevel}<ion-subtitle>
+        
       </ion-card-header>
       <ion-card-content style="max-height:200px; overflow:auto; padding:10px">
       <ion-text>
@@ -198,16 +199,15 @@ export class Tab1Page {
   }
   loadmap() {
     if(this.plt.is('mobile')){
-      this.ButtonLocation='end'
+      this.ButtonLocation='end';
     }
     this.map =leaflet.map('map',{worldCopyJump: 'true',doubleClickZoom:false})
     map=this.map;
     legend.addTo(this.map);
     leaf.addTo(this.map);
     geo.addTo(this.map);
-
-    
     this.getLocation()
+
   }
   onButtonClick(){
     this.getLocation();
@@ -218,6 +218,5 @@ export class Tab1Page {
     windowOn=true;
   }
 
-  //Modal 機能の実装
   
 }
