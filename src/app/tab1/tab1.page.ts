@@ -54,7 +54,7 @@ function clickFeature(e){
   });
   getCountryInfo(e.latlng,layer.feature.properties);
   if (windowOn){
-    CountryInfo.addTo(map);
+
     windowOn=false;
   }  
   else
@@ -70,6 +70,7 @@ function getCountryInfo(latlng,props){
   var InfoHTML:String=`
     <h3>${CountryName}</h3>
     <h4>危険度：${DangerLevel}</h4>
+    <h4><a href="https://www.anzen.mofa.go.jp${InfoURL}">くわしくはこちら</a></h4>
   `;
   popup.setLatLng(latlng)
   .setContent(InfoHTML)
@@ -112,6 +113,7 @@ var popup=leaflet.popup();
 var CountryInfo=leaflet.control({position:'bottomleft'});
 CountryInfo.onAdd= function(map){
   this._div=leaflet.DomUtil.create('div','info information');
+  var button=leaflet.DomUtil.create('button','closebutton',this._div[0]);
   this._div.style.marginBottom=0;
   this._div.style.marginLeft=0;
   this.update();
@@ -123,18 +125,21 @@ CountryInfo.onAdd= function(map){
 }
 CountryInfo.update=function(props){
   this._div.innerHTML=`
-    <ion-card style="max-width:408px;max-height:300px;">
+    <ion-card style="max-width:408px;height:100;">
         <ion-card-header color="primary">
         <ion-title>${CountryName}</ion-title>
         <ion-subtitle>危険度：${DangerLevel}<ion-subtitle>
       </ion-card-header>
-      <ion-card-content style="max-height:120px; overflow:auto; padding:10px">
+      <ion-card-content style="max-height:450px; overflow:auto; padding:10px">
       <ion-text>
       ${Info}
       </ion-text>
       </ion-card-content>
     </ion-card>
   `
+}
+CountryInfo._addButton=function(){
+  this._div=leaflet.DomUtil.create('button','closebutton')
 }
 
 var legend=leaflet.control();
@@ -167,8 +172,10 @@ export class Tab1Page {
   Info:String=Info;
 
   ButtonLocation='start';
-  ButtonIconName='information-circle-outline';
+  ButtonIconName='information-circle';
   ButtonIconColor='success';
+
+  windowOn=true;
 
   constructor(public navCtrl: NavController,public modalCtrl:ModalController,public plt:Platform){}
   
@@ -215,7 +222,17 @@ export class Tab1Page {
   }
 
   closeWindow(){
+    if(this.windowOn){
+      CountryInfo.addTo(this.map);
+      this.windowOn=false;
+      this.ButtonIconColor="danger";
+      this.ButtonIconName="close-circle";
+    }
+    else{
     CountryInfo.remove();
-    windowOn=true;
+    this.windowOn=true;
+    this.ButtonIconColor="success";
+    this.ButtonIconName="information-circle"
+  }
   }
 }
