@@ -68,9 +68,9 @@ function getCountryInfo(latlng,props){
   Info=props.news;
   InfoURL=props.URL;
   var InfoHTML:String=`
-    <h3>${CountryName}</h3>
-    <h4>危険度：${DangerLevel}</h4>
-    <h4><a href="https://www.anzen.mofa.go.jp${InfoURL}">くわしくはこちら</a></h4>
+    <h5>${CountryName}</h5>
+    <h6>危険度：${DangerLevel}</h6>
+    <h6><a href="https://www.anzen.mofa.go.jp${InfoURL}">くわしくはこちら</a></h6>
   `;
   popup.setLatLng(latlng)
   .setContent(InfoHTML)
