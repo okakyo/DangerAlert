@@ -165,7 +165,11 @@ export class Tab1Page {
   CountryName:String=CountryName;
   DangerLevel:Number=DangerLevel;
   Info:String=Info;
+
   ButtonLocation='start';
+  ButtonIconName='information-circle-outline';
+  ButtonIconColor='success';
+
   constructor(public navCtrl: NavController,public modalCtrl:ModalController,public plt:Platform){}
   
   ionViewDidEnter() {
