@@ -117,8 +117,6 @@ CountryInfo.onAdd= function(map){
   this.update();
   this._div.onclick=function(e){
     
-    e.stopPropagation();
-    e.preventDefault();
     return false;
   }
   return this._div
@@ -216,6 +214,4 @@ export class Tab1Page {
     CountryInfo.remove();
     windowOn=true;
   }
-
-  
 }
