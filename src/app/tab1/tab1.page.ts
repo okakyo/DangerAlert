@@ -171,7 +171,7 @@ export class Tab1Page {
   DangerLevel:Number=DangerLevel;
   Info:String=Info;
 
-  ButtonLocation='start';
+  ButtonLocation=true;
   ButtonIconName='information-circle';
   ButtonIconColor='success';
 
@@ -207,7 +207,7 @@ export class Tab1Page {
   }
   loadmap() {
     if(this.plt.is('mobile')){
-      this.ButtonLocation='end';
+      this.ButtonLocation=false;
     }
     this.map =leaflet.map('map',{worldCopyJump: 'true',doubleClickZoom:false})
     map=this.map;
