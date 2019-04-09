@@ -5,11 +5,13 @@ import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-
+import {} from '@ionic-native/google-analytics'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {SemiModalPageModule} from './semi-modal/semi-modal.module';
 import { MenuPageModule } from './menu/menu.module';
+
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -17,7 +19,6 @@ import { MenuPageModule } from './menu/menu.module';
   providers: [
     StatusBar,
     SplashScreen,
- 
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
