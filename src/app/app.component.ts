@@ -22,7 +22,8 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.ga.startTrackerWithId('UA-137860602-1').then(()=>{
         console.log('Google Analytics is ready now');
-        this.ga.trackView('test');
+        this.ga.trackView('tab1');
+        this.ga.trackView('tab3');
       }).catch(e=>{
         console.log('Error starting GoogleAnalytics',e);
       })
