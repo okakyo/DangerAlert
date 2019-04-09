@@ -20,7 +20,7 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.ga.StartTrackerWithId('').then(()=>{
+      this.ga.startTrackerWithId('UA-137860602-1').then(()=>{
         console.log('Google Analytics is ready now');
         this.ga.trackView('test');
       }).catch(e=>{
