@@ -20,7 +20,6 @@ var windowOn:boolean=true;
 
 //世界地図のデータを取得
 var leaf=leaflet.tileLayer(`http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
-      attributions: 'Made by Kyhohei Oka',
       maxZoom: 20,
       minZoom: 2,
     })
