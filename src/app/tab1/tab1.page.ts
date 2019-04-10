@@ -175,7 +175,6 @@ export class Tab1Page {
   ButtonIconColor='success';
 
   windowOn=true;
-
   constructor(public navCtrl: NavController,
               public modalCtrl:ModalController,
               public plt:Platform,
