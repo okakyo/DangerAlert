@@ -183,9 +183,10 @@ export class Tab1Page {
               ){}
   ionViewDidEnter() {
     this.ga.startTrackerWithId('UA-137860602-1')
-      .then(()=>{})
-      console.log('Google Analytics is ready');
-      this.ga.trackView('tab1')
+      .then(()=>{
+        console.log('Google Analytics is ready');
+        this.ga.trackView('tab1')})
+      
       .catch(e=>{console.log(e)});
 
     this.loadmap();
