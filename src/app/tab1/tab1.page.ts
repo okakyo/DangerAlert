@@ -3,7 +3,7 @@ import { NavController, Config, ModalController, Platform } from '@ionic/angular
 import leaflet from 'leaflet';
 import { Observable, } from 'rxjs';
 import * as Data from './custom.geo.json';
-
+import {GoogleAnalytics} from '@ionic-native/google-analytics/ngx';
 import { SemiModalPage } from '../semi-modal/semi-modal.page';
 
 //jsonファイルより、国境、国の危険状態を取得
@@ -176,9 +176,18 @@ export class Tab1Page {
 
   windowOn=true;
 
-  constructor(public navCtrl: NavController,public modalCtrl:ModalController,public plt:Platform){}
-  
+  constructor(public navCtrl: NavController,
+              public modalCtrl:ModalController,
+              public plt:Platform,
+              private ga:GoogleAnalytics
+              ){}
   ionViewDidEnter() {
+    this.ga.startTrackerWithId('UA-137860602-1')
+      .then(()=>{})
+      console.log('Google Analytics is ready');
+      this.ga.trackView('tab1')
+      .catch(e=>{console.log(e)});
+
     this.loadmap();
   }
 
