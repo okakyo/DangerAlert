@@ -3,7 +3,7 @@ import { NavController, Config, ModalController, Platform } from '@ionic/angular
 import leaflet from 'leaflet';
 import { Observable, } from 'rxjs';
 import * as Data from './custom.geo.json';
-import {GoogleAnalytics} from '@ionic-native/google-analytics/ngx';
+import {GoogleAnalytics} from '@ionic-native/google-analytics';
 import { SemiModalPage } from '../semi-modal/semi-modal.page';
 
 //jsonファイルより、国境、国の危険状態を取得
