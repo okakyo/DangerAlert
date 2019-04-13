@@ -14,7 +14,6 @@ import {GoogleAnalytics} from '@ionic-native/google-analytics/ngx';
     FormsModule,
     HttpClientModule,
     HttpClientJsonpModule,
-    GoogleAnalytics,
     RouterModule.forChild([{ path: '', component: Tab1Page }])
   ],
   declarations: [Tab1Page]
