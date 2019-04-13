@@ -4,7 +4,6 @@ import leaflet from 'leaflet';
 import { Observable, } from 'rxjs';
 import * as Data from './custom.geo.json';
 import { SemiModalPage } from '../semi-modal/semi-modal.page';
-import {} from '@ionic-native/google-analytics';
 //jsonファイルより、国境、国の危険状態を取得
 var worldBorder: Observable<any>=Data['features'];
 var before=null;
