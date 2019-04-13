@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {GoogleAnalytics} from '@ionic-native/google-analytics/ngx';
+import {GoogleAnalytics} from '@ionic-native/google-analytics';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
