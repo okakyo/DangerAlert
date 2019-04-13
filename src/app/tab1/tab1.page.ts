@@ -74,6 +74,7 @@ function getCountryInfo(latlng,props){
   popup.setLatLng(latlng)
   .setContent(InfoHTML)
   .openOn(map);
+  
 };
 
 function onEachFeature(feature,layer){
@@ -180,6 +181,13 @@ export class Tab1Page {
               private ga:GoogleAnalytics
               ){}
   ionViewDidEnter() {
+    this.ga.startTrackerWithId('UA-137860602-1')
+      .then(()=>{
+        console.log('Google Analytics is ready');
+        this.ga.trackView('tab1')})
+      
+      .catch(e=>{console.log(e)});
+
     this.loadmap();
   }
 
@@ -215,6 +223,7 @@ export class Tab1Page {
     leaf.addTo(this.map);
     geo.addTo(this.map);
     this.getLocation()
+
   }
   onButtonClick(){
     this.getLocation();
