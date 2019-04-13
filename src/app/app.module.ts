@@ -9,13 +9,20 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {SemiModalPageModule} from './semi-modal/semi-modal.module';
 import { MenuPageModule } from './menu/menu.module';
+import {GoogleAnalytics} from '@ionic-native/google-analytics/ngx';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, MenuPageModule, SemiModalPageModule],
+  imports: [
+    BrowserModule, 
+    IonicModule.forRoot(),
+     AppRoutingModule,
+      MenuPageModule,
+      SemiModalPageModule],
   providers: [
     StatusBar,
     SplashScreen,
+    GoogleAnalytics,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
