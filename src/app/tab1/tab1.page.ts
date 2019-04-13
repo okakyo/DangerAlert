@@ -74,7 +74,6 @@ function getCountryInfo(latlng,props){
   popup.setLatLng(latlng)
   .setContent(InfoHTML)
   .openOn(map);
-  
 };
 
 function onEachFeature(feature,layer){
