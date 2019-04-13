@@ -23,4 +23,5 @@ import {GoogleAnalytics} from '@ionic-native/google-analytics';
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule {}
