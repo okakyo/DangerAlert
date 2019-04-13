@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Tab1Page } from './tab1.page';
 import {HttpClientModule,HttpClientJsonpModule} from '@angular/common/http';
-
+import {GoogleAnalytics} from '@ionic-native/google-analytics/ngx';
 
 @NgModule({
   imports: [
@@ -14,7 +14,7 @@ import {HttpClientModule,HttpClientJsonpModule} from '@angular/common/http';
     FormsModule,
     HttpClientModule,
     HttpClientJsonpModule,
-    
+    GoogleAnalytics,
     RouterModule.forChild([{ path: '', component: Tab1Page }])
   ],
   declarations: [Tab1Page]
