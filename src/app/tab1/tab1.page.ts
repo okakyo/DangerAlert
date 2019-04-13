@@ -215,7 +215,6 @@ export class Tab1Page {
     leaf.addTo(this.map);
     geo.addTo(this.map);
     this.getLocation()
-
   }
   onButtonClick(){
     this.getLocation();
