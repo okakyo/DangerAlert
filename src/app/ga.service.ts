@@ -18,7 +18,7 @@ export class GaService {
     });
   }
   sendEvent(eventName:string,eventCategory:string,eventAction:string,eventLabel:any):void{
-    if(!this.useGA){
+    if(!this.useGA()){
       return;    }
     gtag('event',eventName,{
       event_category:eventCategory,
