@@ -10,7 +10,6 @@ import { AppComponent } from './app.component';
 import {SemiModalPageModule} from './semi-modal/semi-modal.module';
 import { MenuPageModule } from './menu/menu.module';
 import {GoogleAnalytics} from '@ionic-native/google-analytics';
-
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
