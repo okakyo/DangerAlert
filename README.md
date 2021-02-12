@@ -1,4 +1,5 @@
 # DangerAlert
+![Danger Alert]("danger-alert.png")
 - ## Index
     - 使い方
     	- 現在の世界各国の危険レベルを知ることができます
